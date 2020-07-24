@@ -1,0 +1,29 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(10,9,6,5,4,3); //define lcdpins
+int sp = 2; // speaker pin
+int temp = A0; // sensor pin
+float tem; //the data
+void setup(){
+  lcd.begin(16,2); //the nomber of charecters of lcd
+  lcd.print("this is my"); //to print (this is my fire alarm)
+  lcd.setCursor(0,1); //to select the start of writing
+  lcd.print("the fire alarm"); 
+  delay(5000);
+  lcd.clear();// to clear all words on lcd
+}
+void loop(){
+  tem = analogRead(A0); //read from snsor
+  tem = tem * 0.48828125; // Measure the heat
+  lcd.clear();
+  lcd.print("temp :");
+  lcd.setCursor(0,6);
+  lcd.print(tem);
+  if(tem>50){
+    delay(500);
+    tone(2,350); //to output sounf from speaker
+  }
+  else{
+    delay(500); 
+    noTone(2); //stop sound of the speaker
+  }
+}
